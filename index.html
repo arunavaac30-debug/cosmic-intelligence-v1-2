@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later. Copyright (C) 2026 Arunava Chattopadhyay. Part of COSMIC INTELLIGENCE; see LICENSE and NOTICE in the source. -->
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>COSMIC INTELLIGENCE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600&family=Noto+Serif+Bengali:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f1ea;--panel:#fff;--ink:#17203a;--mute:#5b6480;--line:#d8d4c6;--brass:#8a6a1c;--teal:#1f7a7a;--moon:#17203a;--moonlit:#f1e7c4;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1429;--panel:#162040;--ink:#ebe6d6;--mute:#9aa3c0;--line:#2a3560;--brass:#d2ab4e;--teal:#6cc0bd;--moon:#0b1022;--moonlit:#f1e7c4}}
+:root[data-theme="dark"]{--bg:#0e1429;--panel:#162040;--ink:#ebe6d6;--mute:#9aa3c0;--line:#2a3560;--brass:#d2ab4e;--teal:#6cc0bd;--moon:#0b1022;--moonlit:#f1e7c4}
+html{color-scheme:light dark;scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 "Hind Siliguri",system-ui,sans-serif;padding-bottom:72px}
+h1,h2,h3{font-family:"Noto Serif Bengali",Georgia,serif;line-height:1.3;margin:0 0 .5rem}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line)}
+header b{font-family:Georgia,serif;letter-spacing:.14em;font-size:15px}
+button{font:inherit;cursor:pointer;color:inherit}
+.lang{border:1px solid var(--line);background:none;border-radius:20px;padding:2px 12px}
+main{max-width:720px;margin:0 auto;padding:18px}
+section{display:none}section.on{display:block}
+.hero{padding:10px 0 22px}
+.hero h1{font-size:1.9rem}
+.hero p{color:var(--mute);margin:0}
+.moonrow{display:flex;gap:18px;align-items:center;border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:16px;margin:14px 0}
+.moonrow svg{flex:none}
+.k{color:var(--mute);font-size:14px}
+.card{border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:14px 16px;margin:10px 0}
+.tag{display:inline-block;font-size:13px;border:1px solid var(--teal);color:var(--teal);border-radius:12px;padding:0 10px;margin-left:6px}
+.tag.p{border-color:var(--brass);color:var(--brass)}
+details summary{cursor:pointer;font-weight:600}
+details ul{margin:.5rem 0 0;padding-left:1.2rem;color:var(--mute)}
+label{display:block;margin:10px 0 4px;font-weight:600}
+input,select,textarea{width:100%;font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+.go{margin-top:14px;background:var(--brass);color:#fff;border:0;border-radius:8px;padding:10px 20px;font-weight:600}
+.out{margin-top:14px;border-left:3px solid var(--brass);padding:4px 14px}
+.out h3{font-size:1.05rem;margin-top:12px}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--panel);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+nav{overflow-x:auto}nav button{flex:0 0 auto;border:0;background:none;padding:12px 14px;font-size:14px;white-space:nowrap;color:var(--mute)}
+nav button.on{color:var(--brass);font-weight:600;box-shadow:inset 0 2px 0 var(--brass)}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}.tile{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:14px 12px;text-align:left;font-weight:600;line-height:1.3}.tile small{display:block;font-weight:400;color:var(--mute);font-size:13px;margin-top:2px}.tile:active{border-color:var(--brass)}
+.note{font-size:14px;color:var(--mute);border-top:1px solid var(--line);margin-top:20px;padding-top:10px}
+:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+</style>
+</head>
+<body>
+<header><b>COSMIC INTELLIGENCE</b><button class="lang" id="lang" aria-label="Language">EN</button></header>
+<main>
+<section id="home" class="on">
+ <div class="hero"><h1 id="h-title"></h1><p id="h-sub"></p></div>
+ <div class="moonrow"><div id="moon"></div><div><b id="m-name"></b><div class="k" id="m-info"></div><div class="k" id="m-date"></div></div></div>
+ <div class="tiles" id="tiles"></div>
+ <div class="card"><b id="c1t"></b><div class="k" id="c1"></div></div>
+ <div class="card"><b id="c2t"></b><div class="k" id="c2"></div></div>
+</section>
+<section id="div"><h2 id="d-title"></h2><div id="dlist"></div></section>
+<section id="kun"><h2 id="k-title"></h2><p class="k" id="k-sub"></p>
+ <label id="k-d"></label><input id="kd" type="date" value="1990-05-15">
+ <label id="k-t"></label><input id="kt" type="time" value="10:30">
+ <label id="k-pl"></label><select id="kcity"></select>
+ <label id="k-la"></label><input id="klat" type="number" step="any" value="22.5726">
+ <label id="k-lo"></label><input id="klon" type="number" step="any" value="88.3639">
+ <label id="k-tz"></label><input id="ktz" value="Asia/Kolkata">
+ <label id="k-sy"></label><select id="ksys"><option value="vedic"></option><option value="western"></option><option value="kp"></option></select>
+ <button class="go" id="k-go"></button> <button class="go" id="k-mu" style="background:var(--teal)"></button>
+ <h3 id="k-g2" style="margin-top:22px"></h3><p class="k" id="k-n2"></p>
+ <label id="k-d2"></label><input id="kd2" type="date">
+ <label id="k-t2"></label><input id="kt2" type="time">
+ <label id="k-nm"></label><input id="knum" type="number" min="1" max="249" value="77">
+ <label id="k-q"></label><select id="kq"></select>
+ <button class="go" id="k-tr"></button> <button class="go" id="k-hr" style="background:var(--teal)"></button>
+ <p class="k" id="k-msg" role="status"></p>
+ <div id="k-out" hidden></div>
+</section>
+<section id="lab">
+ <h2 id="l-title"></h2><p class="k" id="l-sub"></p>
+ <label id="l-n"></label><input id="trials" type="number" min="1" value="100">
+ <label id="l-h"></label><input id="hits" type="number" min="0" value="58">
+ <label id="l-c"></label><input id="chance" type="number" min="1" max="99" value="50">
+ <button class="go" id="l-go"></button>
+ <div class="out" id="l-out" hidden></div>
+</section>
+<section id="plan">
+ <h2 id="p-title"></h2>
+ <label id="p-g"></label><input id="goal">
+ <label id="p-a"></label><select id="area"></select>
+ <label id="p-t"></label><select id="hrs"><option>1</option><option selected>2</option><option>3</option><option>4</option></select>
+ <button class="go" id="p-go"></button>
+ <div class="out" id="p-out" hidden></div>
+</section>
+<section id="acct"><h2 id="a-title"></h2>
+ <div id="a-form">
+  <div id="a-reset" hidden><label id="a-np"></label><input id="npw" type="password" autocomplete="new-password"><button class="go" id="a-rs"></button></div>
+  <label id="a-ul"></label><input id="apiurl" type="url">
+  <label id="a-e"></label><input id="email" type="email" autocomplete="email">
+  <label id="a-p"></label><input id="pw" type="password" autocomplete="current-password">
+  <label style="font-weight:400"><input id="cons" type="checkbox" style="width:auto"> <span id="a-c"></span></label>
+  <p class="k"><a href="#" id="a-lg" style="color:var(--teal)"></a></p>
+  <button class="go" id="a-login"></button> <button class="go" id="a-reg" style="background:var(--teal)"></button>
+  <p class="k"><a href="#" id="a-fg" style="color:var(--teal)"></a> · <a href="#" id="a-rv" style="color:var(--teal)"></a></p>
+ </div>
+ <div id="a-in" hidden>
+  <p id="a-me"></p>
+  <button class="go" id="a-exp" style="background:var(--teal)"></button> <button class="go" id="a-logout"></button> <button class="go" id="a-del" style="background:#a33"></button>
+  <h3 id="a-pt" style="margin-top:20px"></h3><div id="a-plans"></div>
+ </div>
+ <p class="k" id="a-msg" role="status"></p>
+</section>
+<section id="legal"><h2 id="lg-title"></h2><p class="out" id="lg-draft" style="margin-top:0"></p><div id="lg-body"></div></section>
+<section id="road"><h2 id="r-title"></h2><div id="rlist"></div></section>
+<p class="note" id="note"></p>
+<p class="note"><a id="src" href="#" target="_blank" rel="noopener" style="color:var(--teal)">সোর্স কোড / Source code</a> · AGPL-3.0-or-later · Swiss Ephemeris (Astrodienst AG)</p>
+</main>
+<nav id="nav"></nav>
+<script>
+var L='bn';
+var T={
+bn:{title:'মহাবিশ্ব বুঝুন। সত্য খুঁজুন। মানুষকে পথ দেখান।',sub:'সঠিক তথ্য। বুদ্ধিমান বিশ্লেষণ। বাস্তবসম্মত পরামর্শ। উন্নত জীবন।',
+nav:['হোম','বিভাগ','কুণ্ডলী','ল্যাব','পরিকল্পনা','রোডম্যাপ','অ্যাকাউন্ট','নীতি'],
+moon:'আজকের চাঁদ',age:'বয়স',days:'দিন',lit:'আলোকিত',
+c1t:'তথ্য ও বিশ্বাস আলাদা',c1:'প্রতিটি উত্তরে প্রমাণসহ তথ্য এবং ঐতিহ্যগত বিশ্বাস আলাদা করে দেখানো হবে।',
+c2t:'আপনার তথ্য আপনার',c2:'সম্মতি ছাড়া ব্যক্তিগত তথ্য সংগ্রহ নয়, বিক্রিও নয়। যেকোনো সময় মুছে ফেলা যাবে।',
+dt:'আটটি বিভাগ',lt:'জ্যোতিষ যাচাই ল্যাব',ls:'কোনো দাবি (যেমন ভবিষ্যদ্বাণী) ব্লাইন্ড টেস্টে কতবার মিলেছে দিন। দেখুন, শুধু ভাগ্যের জোরে এতবার মেলার সম্ভাবনা কত।',
+ln:'মোট পরীক্ষা',lh:'কতবার মিলেছে',lc:'ভাগ্যে মেলার সম্ভাবনা (%)',lg:'হিসাব করুন',
+pt:'ব্যক্তিগত অ্যাকশন প্ল্যান',pg:'আপনার লক্ষ্য',pa:'ক্ষেত্র',ph:'প্রতিদিন কত ঘণ্টা দিতে পারবেন',pgo:'প্ল্যান তৈরি করুন',
+rt:'উন্নয়ন রোডম্যাপ',
+areas:['শিক্ষা','চাকরি','ব্যবসা','আর্থিক শিক্ষা','ব্যক্তিগত উন্নয়ন'],
+note:'এটি Phase 1 প্রোটোটাইপ। জন্মছক ও নির্ভুল গ্রহগণনা Phase 4-এ যাচাইকৃত Swiss Ephemeris দিয়ে হবে, AI-এর অনুমানে নয়। স্বাস্থ্য, আইন ও বিনিয়োগে বিশেষজ্ঞের পরামর্শ নিন।',
+phases:['ভিত্তি','প্রথম কার্যকর পরিষেবা','প্রথম আয়','জ্যোতিষ ইন্টেলিজেন্স','গবেষণা ইন্টেলিজেন্স','মানবজীবন ইন্টেলিজেন্স','বৈশ্বিক সম্প্রসারণ'],
+live:'প্রোটোটাইপ চালু',soon:'পরিকল্পিত',
+mn:['অমাবস্যা','শুক্লপক্ষের শুরু','শুক্লা অষ্টমী (অর্ধচন্দ্র)','শুক্লপক্ষ, প্রায় পূর্ণ','পূর্ণিমা','কৃষ্ণপক্ষ, প্রায় পূর্ণ','কৃষ্ণা অষ্টমী (অর্ধচন্দ্র)','কৃষ্ণপক্ষের শেষ'],
+p:'সম্ভাবনা (p-value)',
+pw:'ভাগ্যের জোরে এতবার মেলা বেশ সম্ভব। এটি দাবির পক্ষে জোরালো প্রমাণ নয়।',
+ps:'ভাগ্যের জোরে এমন ফল খুব কম হয়। তবু একটি পরীক্ষা যথেষ্ট নয়; ফল আবার পরীক্ষা করে দেখতে হবে।',
+w7:'৭ দিন',w30:'৩০ দিন',w90:'৯০ দিন',
+acct:'অ্যাকাউন্ট',au:'অ্যাকাউন্ট ও সেভ করা প্ল্যান',aul:'সার্ভারের ঠিকানা (API)',ae:'ইমেইল',ap:'পাসওয়ার্ড (কমপক্ষে ৮ অক্ষর)',ac:'আমি সম্মতি দিচ্ছি: আমার ইমেইল শুধু অ্যাকাউন্টের জন্য ব্যবহার হবে এবং আমি যেকোনো সময় তা মুছতে পারব।',
+alg:'লগইন',arg:'নতুন অ্যাকাউন্ট',alo:'লগআউট',adel:'অ্যাকাউন্ট মুছুন',adc:'অ্যাকাউন্ট ও সব সেভ করা প্ল্যান চিরতরে মুছে যাবে। নিশ্চিত?',
+apt:'সেভ করা প্ল্যান',anone:'এখনো কোনো প্ল্যান সেভ করা হয়নি।',as:'প্ল্যান সেভ হয়েছে।',anl:'প্ল্যান সেভ করতে অ্যাকাউন্ট ট্যাব থেকে লগইন করুন।',
+ane:'সার্ভারে পৌঁছানো যায়নি। সার্ভার চালু আছে কি না এবং ঠিকানা সঠিক কি না দেখুন।',aer:'কাজটি হয়নি',alin:'লগইন আছেন: ',aok:'সম্পন্ন হয়েছে।',aem:'ইমেইল ও পাসওয়ার্ড দিন।',
+kn:'কুণ্ডলী',kti:'জন্মছক (কুণ্ডলী)',kst:'জন্মতারিখ, সময় ও স্থান দিন। গণনা সার্ভারে Swiss Ephemeris দিয়ে হয়। এখানে শুধু গণনা দেখানো হয়, কোনো ভবিষ্যদ্বাণী নয়। জন্মতথ্য সংরক্ষণ করা হয় না। সার্ভারের ঠিকানা অ্যাকাউন্ট ট্যাবে বদলানো যায়।',
+kd:'জন্মতারিখ (মুহূর্তের জন্য: সেই দিনের তারিখ)',kt:'জন্মসময় (স্থানীয়)',kpl:'জন্মস্থান',kcu:'অন্য (নিজে লিখুন)',kla:'অক্ষাংশ (Latitude)',klo:'দ্রাঘিমাংশ (Longitude)',ktz:'সময় অঞ্চল (Time Zone)',ksy:'পদ্ধতি',
+kv:'বৈদিক (নিরয়ন, লাহিড়ী অয়নাংশ)',kw:'পাশ্চাত্য (সায়ন)',kgo:'ছক তৈরি করুন',klag:'লগ্ন',kmoon:'চন্দ্ররাশি ও নক্ষত্র',kpt:'গ্রহের অবস্থান',kgr:'গ্রহ',kra:'রাশি',kdeg:'অংশ',knp:'নক্ষত্র-পাদ',khs:'ভাব',kr:'বক্রী',
+kdt:'বিংশোত্তরী দশা',kcur:'চলতি দশা',kant:'অন্তর্দশা',kbal:'জন্মকালে প্রথম দশার অবশিষ্ট (বছর)',kpg:'পঞ্জিকা (সূর্যোদয়ের সময়ে)',ksr:'সূর্যোদয়',kss:'সূর্যাস্ত',kvara:'বার',ktith:'তিথি',kyoga:'যোগ',kkar:'করণ',kwait:'গণনা চলছে…',kch:'ছক',kin:'এখনো কোনো দশা চলছে না',tl_v:'জন্মছক|বৈদিক কুণ্ডলী, দশা, পঞ্জিকা',tl_kp:'কেপি ছক|উপনক্ষত্রেশ ও সিগনিফিকেটর',tl_mu:'মুহূর্ত|রাহুকাল, অভিজিৎ, চৌঘড়িয়া',tl_tr:'গোচর|বর্তমান গ্রহের অবস্থান',tl_hr:'কেপি প্রশ্ন-গণনা|১ থেকে ২৪৯ সংখ্যা',tl_lab:'যাচাই ল্যাব|দাবি কতটা ভাগ্যের জোরে?',tl_pl:'অ্যাকশন প্ল্যান|৭, ৩০ ও ৯০ দিন',tl_ac:'অ্যাকাউন্ট|লগইন, সেভ করা প্ল্যান, ডেটা',lgt:'গোপনীয়তা নীতি ও শর্তাবলী',lgd:'এটি একটি খসড়া। চালু করার আগে [ ] চিহ্নিত ঘর পূরণ করুন এবং একজন আইনজীবীকে দেখিয়ে নিন।',lgl:'গোপনীয়তা নীতি ও শর্তাবলী পড়ুন',aexp:'আমার তথ্য ডাউনলোড',anp:'নতুন পাসওয়ার্ড (কমপক্ষে ৮ অক্ষর)',ars:'নতুন পাসওয়ার্ড সেট করুন',afg:'পাসওয়ার্ড ভুলে গেছেন?',arv:'যাচাইয়ের লিংক আবার পাঠান',aver:'আপনার ইমেইলে যাচাইয়ের লিংক পাঠানো হয়েছে। লিংকে ক্লিক করে অ্যাকাউন্ট চালু করুন, তারপর লগইন করুন। স্প্যাম ফোল্ডারও দেখুন।',anv:'ইমেইল এখনো যাচাই হয়নি। ইমেইলের লিংকে ক্লিক করুন, বা "যাচাইয়ের লিংক আবার পাঠান" চাপুন।',afs:'ইমেইলে অ্যাকাউন্ট থাকলে কিছুক্ষণের মধ্যে একটি লিংক পাঠানো হবে। স্প্যাম ফোল্ডারও দেখুন।',avd:'ইমেইল যাচাই হয়েছে। এখন লগইন করুন।',arok:'পাসওয়ার্ড বদলেছে। এখন লগইন করুন।',abl:'লিংকটি ভুল বা মেয়াদ শেষ। আবার চেষ্টা করুন।',anoe:'এই সার্ভারে ইমেইল পরিষেবা চালু নেই।',kgt:'গোচর ও কেপি প্রশ্ন-গণনা',knote2:'গোচরে উপরের জন্মতথ্য লাগে। প্রশ্ন-গণনায় জন্মতথ্য লাগে না, লাগে প্রশ্নের সময় ও স্থান।',kd2:'গোচর বা প্রশ্নের তারিখ',kt2:'গোচর বা প্রশ্নের সময়',knum:'প্রশ্ন সংখ্যা (১–২৪৯)',kq:'প্রশ্নের বিষয়',kqn:'বিষয় ছাড়াই শুধু ছক',tp_marriage:'বিবাহ',tp_job:'চাকরি',tp_education:'শিক্ষা',tp_child:'সন্তান',tp_foreign:'বিদেশযাত্রা',ktr:'গোচর ছক দেখুন',khr:'কেপি প্রশ্ন-গণনা',klh:'লগ্ন থেকে ভাব',kmh:'চন্দ্র থেকে ভাব',kmr:'জন্মকালীন চন্দ্ররাশি',ktat:'গোচরের সময়',ksat:'শনি (চন্দ্র থেকে ভাব)',kjup:'বৃহস্পতি (চন্দ্র থেকে ভাব)',ksd:'সাড়ে সাতি পর্যায়ে অবস্থান',kyes:'হ্যাঁ',kno:'না',khn:'প্রশ্ন সংখ্যা',klp:'লগ্নবিন্দু',kcs2:'ভাবের উপনক্ষত্রেশ',ksh:'সাব-লর্ডের সূচিত ভাব',ksup:'ঐতিহ্যগত ভাব',kmat:'মিলেছে',kmc:'নিয়মের মিল',khnote:'এটি শুধু ঐতিহ্যগত নিয়মের মিল গণনা; ভবিষ্যদ্বাণী বা সিদ্ধান্ত নয়। স্বাস্থ্য, আইন বা বিনিয়োগের সিদ্ধান্তে ব্যবহার করবেন না।',ktn:'গোচরে শুধু অবস্থান দেখানো হয়, কোনো ফলাফল বলা হয় না।',kkp:'কেপি (কৃষ্ণমূর্তি, প্যাসিডাস ভাব)',kmu:'ওই তারিখের মুহূর্ত দেখুন',kcs:'ভাব-সন্ধি (Cusp)',kst2:'নক্ষত্রেশ',ksb:'উপনক্ষত্রেশ',kss2:'উপ-উপ',ksl:'রাশিপতি',ksg:'সিগনিফিকেটর (A-D)',krp:'রুলিং প্ল্যানেট',kav:'এড়িয়ে চলার সময়',kau:'শুভ সময়',kch2:'চৌঘড়িয়া',krh:'রাহুকাল',kym:'যমঘণ্টক',kgu:'গুলিককাল',kab:'অভিজিৎ মুহূর্ত',kbr:'ব্রাহ্ম মুহূর্ত',kdy:'দিন',knt:'রাত',kgd:'শুভ',kbd:'অশুভ',kne:'মধ্যম',kmn:'শুধু সাধারণ দৈনিক সময়। বিয়ে বা গৃহপ্রবেশের মতো নির্দিষ্ট কাজের মুহূর্ত ও ব্যক্তিগত তারা/চন্দ্রবল এখানে নেই। অঞ্চলভেদে নিয়ম আলাদা হতে পারে।'},
+en:{title:'Understand the Cosmos. Discover the Truth. Guide Humanity.',sub:'Accurate information. Intelligent analysis. Practical advice. Better lives.',
+nav:['Home','Divisions','Kundli','Lab','Planner','Roadmap','Account','Policy'],
+moon:'Moon today',age:'Age',days:'days',lit:'illuminated',
+c1t:'Evidence and belief, kept apart',c1:'Every answer will separate evidence-backed facts from traditional belief.',
+c2t:'Your data stays yours',c2:'No personal data without consent, and none is ever sold. You can delete it any time.',
+dt:'Eight divisions',lt:'Astrology Validation Lab',ls:'Enter how many times a claim (such as a prediction) matched in a blind test. See how likely that many matches are by luck alone.',
+ln:'Total trials',lh:'Matches',lc:'Chance of a match by luck (%)',lg:'Calculate',
+pt:'Personal action plan',pg:'Your goal',pa:'Area',ph:'Hours per day you can give',pgo:'Create plan',
+rt:'Development roadmap',
+areas:['Education','Career','Business','Financial education','Personal development'],
+note:'This is a Phase 1 prototype. Birth charts and exact planetary positions arrive in Phase 4 using a verified Swiss Ephemeris engine, not AI guesses. For health, legal and investment matters, consult a professional.',
+phases:['Foundation','First useful services','First revenue','Astrology intelligence','Research intelligence','Human life intelligence','Global expansion'],
+live:'Prototype live',soon:'Planned',
+mn:['New moon','Waxing crescent','First quarter','Waxing gibbous','Full moon','Waning gibbous','Last quarter','Waning crescent'],
+p:'p-value',
+pw:'This many matches is quite possible by luck. It is not strong evidence for the claim.',
+ps:'Luck rarely produces a result like this. Still, one test is not enough; the result must be repeated.',
+w7:'7 days',w30:'30 days',w90:'90 days',
+acct:'Account',au:'Account and saved plans',aul:'Server address (API)',ae:'Email',ap:'Password (at least 8 characters)',ac:'I consent: my email is used only for my account and I can delete it at any time.',
+alg:'Log in',arg:'Create account',alo:'Log out',adel:'Delete account',adc:'Your account and all saved plans will be permanently deleted. Sure?',
+apt:'Saved plans',anone:'No plans saved yet.',as:'Plan saved.',anl:'Log in from the Account tab to save plans.',
+ane:'Could not reach the server. Check that it is running and the address is correct.',aer:'That did not work',alin:'Logged in as: ',aok:'Done.',aem:'Enter email and password.',
+kn:'Kundli',kti:'Birth chart (Kundli)',kst:'Enter birth date, time and place. The server calculates with Swiss Ephemeris. This shows calculations only, no predictions. Birth data is not stored. Change the server address in the Account tab.',
+kd:'Birth date (for Muhurta: that day)',kt:'Birth time (local)',kpl:'Birth place',kcu:'Other (type below)',kla:'Latitude',klo:'Longitude',ktz:'Time zone',ksy:'System',
+kv:'Vedic (sidereal, Lahiri ayanamsa)',kw:'Western (tropical)',kgo:'Create chart',klag:'Ascendant',kmoon:'Moon sign and nakshatra',kpt:'Planet positions',kgr:'Planet',kra:'Sign',kdeg:'Degree',knp:'Nakshatra-pada',khs:'House',kr:'Retro',
+kdt:'Vimshottari dasha',kcur:'Current dasha',kant:'Antardasha',kbal:'First dasha balance at birth (years)',kpg:'Panchang (at sunrise)',ksr:'Sunrise',kss:'Sunset',kvara:'Weekday',ktith:'Tithi',kyoga:'Yoga',kkar:'Karana',kwait:'Calculating…',kch:'Chart',kin:'No dasha running',tl_v:'Birth chart|Vedic Kundli, dasha, panchang',tl_kp:'KP chart|Sub lords and significators',tl_mu:'Muhurta|Rahu Kaal, Abhijit, Choghadiya',tl_tr:'Gochar|Current planetary positions',tl_hr:'KP horary|Number 1 to 249',tl_lab:'Validation Lab|How much is just luck?',tl_pl:'Action plan|7, 30 and 90 days',tl_ac:'Account|Login, saved plans, data',lgt:'Privacy policy and terms',lgd:'This is a draft. Fill in the [ ] items and have a lawyer review it before launch.',lgl:'Read the privacy policy and terms',aexp:'Download my data',anp:'New password (at least 8 characters)',ars:'Set new password',afg:'Forgot password?',arv:'Resend verification link',aver:'A verification link was sent to your email. Click it to activate your account, then log in. Check your spam folder too.',anv:'Email not verified yet. Click the link in your email, or press "Resend verification link".',afs:'If an account exists for this email, a link will arrive shortly. Check spam too.',avd:'Email verified. You can log in now.',arok:'Password changed. You can log in now.',abl:'The link is wrong or expired. Try again.',anoe:'Email is not set up on this server.',kgt:'Transit (Gochar) and KP horary',knote2:'Transit uses the birth details above. Horary needs no birth data, only the time and place of the question.',kd2:'Transit or question date',kt2:'Transit or question time',knum:'Question number (1-249)',kq:'Question topic',kqn:'Chart only, no topic',tp_marriage:'Marriage',tp_job:'Job',tp_education:'Education',tp_child:'Child',tp_foreign:'Foreign travel',ktr:'Show transit chart',khr:'KP horary',klh:'House from Lagna',kmh:'House from Moon',kmr:'Natal Moon sign',ktat:'Transit time',ksat:'Saturn (house from Moon)',kjup:'Jupiter (house from Moon)',ksd:'In Sade Sati phase',kyes:'Yes',kno:'No',khn:'Question number',klp:'Ascendant point',kcs2:'Cusp sub lord',ksh:'Houses signified by sub lord',ksup:'Traditional houses',kmat:'Matched',kmc:'Rule match',khnote:'This only counts matches with a traditional rule; it is not a prediction or a decision. Do not use it for health, legal or investment decisions.',ktn:'Transit shows positions only, with no outcomes.',kkp:'KP (Krishnamurti, Placidus houses)',kmu:'Show Muhurta for that date',kcs:'House cusps',kst2:'Star lord',ksb:'Sub lord',kss2:'Sub-sub',ksl:'Sign lord',ksg:'Significators (A-D)',krp:'Ruling planets',kav:'Times to avoid',kau:'Auspicious times',kch2:'Choghadiya',krh:'Rahu Kaal',kym:'Yamaganda',kgu:'Gulika Kaal',kab:'Abhijit Muhurta',kbr:'Brahma Muhurta',kdy:'Day',knt:'Night',kgd:'Good',kbd:'Bad',kne:'Neutral',kmn:'General daily time windows only. Activity-specific muhurta (marriage, house entry) and personal Tarabala/Chandrabala are not included; traditions differ by region.'}};
+var DIV=[
+['CI-01','Astronomical Intelligence','জ্যোতির্বিজ্ঞান ইন্টেলিজেন্স',1,['সৌরজগৎ, গ্রহ, নক্ষত্র, গ্যালাক্সি','গ্রহণ ও মহাজাগতিক ঘটনা','NASA, ESA, JPL-এর তথ্য']],
+['CI-02','Ancient Knowledge Intelligence','প্রাচীন জ্ঞান ইন্টেলিজেন্স',2,['বেদ, উপনিষদ, পুরাণ, প্রাচীন সভ্যতা','প্রাচীন জ্ঞান ও আধুনিক বিজ্ঞানের তুলনা','ঐতিহাসিক তথ্য ও পরের ব্যাখ্যার পার্থক্য']],
+['CI-03','Cosmic Influence Research','মহাজাগতিক প্রভাব গবেষণা',5,['সৌর ও ভূচুম্বকীয় কার্যকলাপ, Space Weather','সম্পর্ক ও কারণের পার্থক্য পরীক্ষা']],
+['CI-04','Human Cosmic Biology','মানব মহাজাগতিক জীববিদ্যা',5,['জৈবিক ছন্দ, Circadian Rhythm','ঘুম, আলো ও পরিবেশ']],
+['CI-05','Astrology Validation Lab','জ্যোতিষ যাচাই ল্যাব',1,['Blind Test, Control Group, Statistics','ইতিবাচক ও নেতিবাচক দুই ফলই প্রকাশ']],
+['CI-06','Human Guidance Intelligence','মানব নির্দেশনা ইন্টেলিজেন্স',2,['প্রশ্ন বোঝা, সম্ভাব্য কারণ বিশ্লেষণ','বিকল্প সমাধান ও সিদ্ধান্তে সহায়তা']],
+['CI-07','Global Astrology & Kundli Intelligence','বৈশ্বিক জ্যোতিষ ও কুণ্ডলী',4,['Vedic, KP, Western পদ্ধতি আলাদা মডিউলে','জন্মছক, দশা, গোচর, পঞ্জিকা, মুহূর্ত','যাচাইকৃত Ephemeris Engine']],
+['CI-08','Human Life Intelligence','মানবজীবন ইন্টেলিজেন্স',6,['শিক্ষা, চাকরি, ব্যবসা, আর্থিক শিক্ষা','৭, ৩০ ও ৯০ দিনের Action Plan','অগ্রগতি ট্র্যাকিং']]];
+var $=function(i){return document.getElementById(i)};
+function moonInfo(d){var syn=29.530588853,ref=Date.UTC(2000,0,6,18,14);var age=(((d.getTime()-ref)/864e5)%syn+syn)%syn;
+ var f=(1-Math.cos(2*Math.PI*age/syn))/2;return{age:age,f:f,idx:Math.floor((age/syn)*8+.5)%8}}
+function moonSvg(f,age){var r=34,waxing=age<14.765,k=1-2*f;/* terminator x-radius */
+ var rx=Math.abs(k)*r;var litRight=waxing;
+ var d=litRight?'M40 6 A34 34 0 0 1 40 74 A'+rx+' 34 0 0 '+(k>0?0:1)+' 40 6':'M40 6 A34 34 0 0 0 40 74 A'+rx+' 34 0 0 '+(k>0?1:0)+' 40 6';
+ return '<svg width="80" height="80" viewBox="0 0 80 80" role="img" aria-label="moon"><circle cx="40" cy="40" r="34" fill="var(--moon)" stroke="var(--line)"/><path d="'+d+'" fill="var(--moonlit)"/></svg>'}
+function binom(n,k,p){var s=0,lc=0,i;var lf=[0];for(i=1;i<=n;i++)lf[i]=lf[i-1]+Math.log(i);
+ for(i=k;i<=n;i++){s+=Math.exp(lf[n]-lf[i]-lf[n-i]+i*Math.log(p)+(n-i)*Math.log(1-p))}return Math.min(1,s)}
+function render(){var t=T[L];document.documentElement.lang=L;$('lang').textContent=L=='bn'?'EN':'বাংলা';
+ $('h-title').textContent=t.title;$('h-sub').textContent=t.sub;
+ var m=moonInfo(new Date());$('moon').innerHTML=moonSvg(m.f,m.age);$('m-name').textContent=t.moon+': '+t.mn[m.idx];
+ $('m-info').textContent=t.age+' '+m.age.toFixed(1)+' '+t.days+' · '+Math.round(m.f*100)+'% '+t.lit;
+ $('m-date').textContent=new Date().toLocaleDateString(L=='bn'?'bn-BD':'en-GB',{dateStyle:'full'});
+ $('c1t').textContent=t.c1t;$('c1').textContent=t.c1;$('c2t').textContent=t.c2t;$('c2').textContent=t.c2;
+ $('d-title').textContent=t.dt;$('l-title').textContent=t.lt;$('l-sub').textContent=t.ls;
+ $('l-n').textContent=t.ln;$('l-h').textContent=t.lh;$('l-c').textContent=t.lc;$('l-go').textContent=t.lg;
+ $('p-title').textContent=t.pt;$('p-g').textContent=t.pg;$('p-a').textContent=t.pa;$('p-t').textContent=t.ph;$('p-go').textContent=t.pgo;
+ $('area').innerHTML=t.areas.map(function(a){return '<option>'+a+'</option>'}).join('');
+ $('r-title').textContent=t.rt;renderAcct();renderKun();renderLegal();renderTiles();$('note').textContent=t.note;
+ $('dlist').innerHTML=DIV.map(function(d){var live=d[3]==1;
+  return '<details class="card"><summary>'+d[0]+' · '+(L=='bn'?d[2]:d[1])+'<span class="tag'+(live?'':' p')+'">'+(live?t.live:t.soon+' · Phase '+d[3])+'</span></summary><ul>'+d[4].map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul></details>'}).join('');
+ $('rlist').innerHTML=t.phases.map(function(p,i){return '<div class="card"><b>Phase '+(i+1)+'</b> — '+p+(i==0?'<span class="tag">'+t.live+'</span>':'')+'</div>'}).join('');
+ $('nav').innerHTML=t.nav.map(function(n,i){return '<button data-s="'+['home','div','kun','lab','plan','road','acct','legal'][i]+'">'+n+'</button>'}).join('');
+ show(cur)}
+var cur='home';
+function show(s){cur=s;['home','div','kun','lab','plan','road','acct','legal'].forEach(function(x){$(x).classList.toggle('on',x==s)});
+ document.querySelectorAll('nav button').forEach(function(b){b.classList.toggle('on',b.dataset.s==s)});window.scrollTo(0,0)}
+$('nav').onclick=function(e){if(e.target.dataset.s)show(e.target.dataset.s)};
+$('lang').onclick=function(){L=L=='bn'?'en':'bn';render()};
+$('l-go').onclick=function(){var t=T[L],n=Math.max(1,parseInt($('trials').value)||1),k=Math.min(n,Math.max(0,parseInt($('hits').value)||0)),c=Math.min(.99,Math.max(.01,(parseFloat($('chance').value)||50)/100));
+ var p=binom(n,k,c),o=$('l-out');o.hidden=false;
+ o.innerHTML='<b>'+k+'/'+n+' ('+(k/n*100).toFixed(1)+'%)</b><br>'+t.p+': '+(p<0.0001?'< 0.0001':p.toFixed(4))+'<br>'+(p<0.05?t.ps:t.pw)};
+$('p-go').onclick=function(){var t=T[L],g=$('goal').value.trim()||(L=='bn'?'আমার লক্ষ্য':'my goal'),a=$('area').value,h=$('hrs').value;
+ var S=L=='bn'?{
+ a:['লক্ষ্যটি একটি বাক্যে লিখুন এবং কীভাবে বুঝবেন সফল হয়েছেন তা ঠিক করুন।','এখন আপনার অবস্থা লিখুন: কী জানেন, কী পারেন, কী নেই।','প্রতিদিন '+h+' ঘণ্টা নির্দিষ্ট সময়ে কাজ করুন; প্রতি রাতে এক লাইনে হিসাব রাখুন।'],
+ b:['প্রথম সপ্তাহের অভিজ্ঞতা দেখে লক্ষ্যকে ৩–৪টি মাইলস্টোনে ভাগ করুন।',''+a+' ক্ষেত্রে একজন অভিজ্ঞ মানুষের সঙ্গে কথা বলুন এবং একটি বাস্তব ছোট কাজ শেষ করুন।','প্রতি রবিবার ১০ মিনিট পর্যালোচনা: কী কাজ করল, কী করল না।'],
+ c:['মাইলস্টোনের অর্ধেক শেষ হলে পরিকল্পনা নতুন করে মেলান।','প্রমাণ জমান: কাজের নমুনা, ফলাফল বা সংখ্যা।','শেষ সপ্তাহে ফল মূল্যায়ন করে পরের ৯০ দিনের লক্ষ্য ঠিক করুন।']}:{
+ a:['Write the goal in one sentence and define how you will know it worked.','List where you stand now: what you know, can do, and lack.','Work '+h+' hour(s) daily at a fixed time; log one line each night.'],
+ b:['Split the goal into 3–4 milestones using what week one taught you.','Talk to one experienced person in '+a+' and finish one small real task.','Review for 10 minutes every Sunday: what worked, what did not.'],
+ c:['At the halfway milestone, adjust the plan to reality.','Collect evidence: work samples, results or numbers.','In the last week, assess results and set the next 90-day goal.']};
+ function li(x){return '<ul>'+x.map(function(y){return '<li>'+y+'</li>'}).join('')+'</ul>'}
+ var o=$('p-out');o.hidden=false;o.innerHTML='<b>'+g+'</b> · '+a+'<h3>'+t.w7+'</h3>'+li(S.a)+'<h3>'+t.w30+'</h3>'+li(S.b)+'<h3>'+t.w90+'</h3>'+li(S.c)+'<p class="k" id="p-save"></p>';
+ var ps=$('p-save');
+ if(!tok){ps.textContent=t.anl;return}
+ api('/plan',{method:'POST',body:JSON.stringify({goal:g,area:a,hours_per_day:parseInt(h),lang:L})}).then(function(){ps.textContent=t.as;renderAcct()}).catch(function(e){ps.textContent=errText(e)})};
+
+var API=(function(){try{return localStorage.getItem('ci_api')}catch(e){return null}})()||(/^https?:$/.test(location.protocol)?location.origin:'http://localhost:8000');
+var tok=(function(){try{return localStorage.getItem('ci_tok')}catch(e){return null}})();
+function store(k,v){try{v==null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){}}
+function errText(e){var t=T[L],m=e.message||'';if(m=='Failed to fetch'||e.name=='TypeError')return t.ane;if(/not verified/i.test(m))return t.anv;if(/Invalid or expired/i.test(m))return t.abl;if(/not configured/i.test(m))return t.anoe;return t.aer+' ('+m+')'}
+function api(path,opt){opt=opt||{};opt.headers={'Content-Type':'application/json'};if(tok)opt.headers.Authorization='Bearer '+tok;
+ return fetch(API+path,opt).then(function(r){if(r.status==204)return null;return r.json().then(function(j){if(!r.ok)throw new Error(typeof j.detail=='string'?j.detail:'HTTP '+r.status);return j})})}
+function renderAcct(){var t=T[L];
+ $('a-title').textContent=t.au;$('a-ul').textContent=t.aul;$('a-e').textContent=t.ae;$('a-p').textContent=t.ap;$('a-c').textContent=t.ac;
+ $('a-login').textContent=t.alg;$('a-reg').textContent=t.arg;$('a-logout').textContent=t.alo;$('a-del').textContent=t.adel;$('a-pt').textContent=t.apt;$('a-exp').textContent=t.aexp;$('a-np').textContent=t.anp;$('a-rs').textContent=t.ars;$('a-fg').textContent=t.afg;$('a-rv').textContent=t.arv;
+ $('apiurl').value=API;$('a-form').hidden=!!tok;$('a-in').hidden=!tok;
+ if(!tok)return;
+ api('/me').then(function(m){$('a-me').textContent=t.alin+m.email});
+ api('/reports').then(function(rs){
+  $('a-plans').innerHTML=rs.length?rs.map(function(r){var b=r.body;function ul(x){return '<ul>'+x.map(function(y){return '<li>'+y+'</li>'}).join('')+'</ul>'}
+   return '<details class="card"><summary>'+r.title+' <span class="k">· '+new Date(r.created_at).toLocaleDateString(L=='bn'?'bn-BD':'en-GB')+'</span></summary><b>'+t.w7+'</b>'+ul(b.days_7)+'<b>'+t.w30+'</b>'+ul(b.days_30)+'<b>'+t.w90+'</b>'+ul(b.days_90)+'</details>'}).join(''):'<p class="k">'+t.anone+'</p>'
+ }).catch(function(e){if(/token|Login/i.test(e.message)){tok=null;store('ci_tok',null);renderAcct()}});}
+function auth(path){var t=T[L],em=$('email').value.trim(),pw=$('pw').value;
+ if(!em||!pw){$('a-msg').textContent=t.aem;return}
+ API=$('apiurl').value.trim().replace(/\/$/,'')||API;store('ci_api',API);
+ var body={email:em,password:pw};if(path=='/auth/register'){body.language=L;body.consent=$('cons').checked}
+ api(path,{method:'POST',body:JSON.stringify(body)}).then(function(r){$('pw').value='';if(!r.token){$('a-msg').textContent=t.aver;return}tok=r.token;store('ci_tok',tok);$('a-msg').textContent=t.aok;renderAcct()}).catch(function(e){$('a-msg').textContent=errText(e)})}
+$('a-login').onclick=function(){auth('/auth/login')};
+$('a-reg').onclick=function(){auth('/auth/register')};
+$('a-logout').onclick=function(){tok=null;store('ci_tok',null);$('a-msg').textContent='';renderAcct()};
+$('a-del').onclick=function(){var t=T[L];if(!confirm(t.adc))return;
+ api('/me',{method:'DELETE'}).then(function(){tok=null;store('ci_tok',null);$('a-msg').textContent=t.aok;renderAcct()}).catch(function(e){$('a-msg').textContent=errText(e)})};
+
+var CITIES=[['কলকাতা','Kolkata',22.5726,88.3639,'Asia/Kolkata'],['ঢাকা','Dhaka',23.8103,90.4125,'Asia/Dhaka'],['দিল্লি','Delhi',28.6139,77.209,'Asia/Kolkata'],['মুম্বাই','Mumbai',19.076,72.8777,'Asia/Kolkata'],['চেন্নাই','Chennai',13.0827,80.2707,'Asia/Kolkata'],['লন্ডন','London',51.5072,-0.1276,'Europe/London']];
+var KD=null,KV='d1';
+var AB={bn:{Sun:'সূ',Moon:'চ',Mars:'ম',Mercury:'বু',Jupiter:'বৃ',Venus:'শু',Saturn:'শ',Rahu:'রা',Ketu:'কে',Lagna:'ল'},en:{Sun:'Su',Moon:'Mo',Mars:'Ma',Mercury:'Me',Jupiter:'Ju',Venus:'Ve',Saturn:'Sa',Rahu:'Ra',Ketu:'Ke',Lagna:'As'}};
+var GRID={11:[0,0],0:[1,0],1:[2,0],2:[3,0],10:[0,1],3:[3,1],9:[0,2],4:[3,2],8:[0,3],7:[1,3],6:[2,3],5:[3,3]};
+var SGN={bn:['মেষ','বৃষ','মিথুন','কর্কট','সিংহ','কন্যা','তুলা','বৃশ্চিক','ধনু','মকর','কুম্ভ','মীন'],en:['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces']};
+function renderKun(){var t=T[L];
+ var m={'k-title':'kti','k-sub':'kst','k-d':'kd','k-t':'kt','k-pl':'kpl','k-la':'kla','k-lo':'klo','k-tz':'ktz','k-sy':'ksy','k-go':'kgo','k-mu':'kmu','k-g2':'kgt','k-n2':'knote2','k-d2':'kd2','k-t2':'kt2','k-nm':'knum','k-q':'kq','k-tr':'ktr','k-hr':'khr'};
+ for(var i in m)$(i).textContent=t[m[i]];
+ var sel=$('kcity'),cur=sel.value;sel.innerHTML=CITIES.map(function(c,i){return '<option value="'+i+'">'+(L=='bn'?c[0]:c[1])+'</option>'}).join('')+'<option value="x">'+t.kcu+'</option>';sel.value=cur||'0';
+ $('ksys').options[0].text=t.kv;var tq=$('kq').value||'',TP=['marriage','job','education','child','foreign'];$('kq').innerHTML='<option value="">'+t.kqn+'</option>'+TP.map(function(x){return '<option value="'+x+'">'+t['tp_'+x]+'</option>'}).join('');$('kq').value=tq;
+ $('ksys').options[1].text=t.kw;$('ksys').options[2].text=t.kkp;
+ if(LASTV=='muh'&&KM)drawMuhurta();else if(LASTV=='tr'&&KT)drawTransit();else if(KD)drawKundli()}
+$('kcity').onchange=function(){var c=CITIES[this.value];if(c){$('klat').value=c[2];$('klon').value=c[3];$('ktz').value=c[4]}};
+function chartSvg(map){var A=AB[L],cells={};
+ Object.keys(map).forEach(function(k){(cells[map[k]]=cells[map[k]]||[]).push(k)});
+ var o='<svg viewBox="0 0 320 320" width="100%" style="max-width:360px;display:block;margin:10px auto" role="img" aria-label="chart">';
+ for(var sg=0;sg<12;sg++){var g=GRID[sg],x=g[0]*80,y=g[1]*80,it=cells[sg]||[];
+  o+='<rect x="'+x+'" y="'+y+'" width="80" height="80" style="fill:var(--panel);stroke:var(--line)"/><text x="'+(x+5)+'" y="'+(y+14)+'" font-size="10" style="fill:var(--mute)">'+SGN[L][sg]+'</text>';
+  it.forEach(function(k,i){o+='<text x="'+(x+8+(i%3)*24)+'" y="'+(y+38+Math.floor(i/3)*18)+'" font-size="15" font-weight="'+(k=='Lagna'?700:400)+'" style="fill:'+(k=='Lagna'?'var(--brass)':'var(--ink)')+'">'+A[k]+'</text>'})}
+ return o+'<text x="160" y="164" text-anchor="middle" font-size="13" style="fill:var(--mute)">'+KV.toUpperCase()+'</text></svg>'}
+function drawKundli(){if(KD.system=='kp')return drawKP();var t=T[L],d=KD,B=L=='bn'?'_bn':'_en',a=d.ascendant,pl=d.planets,moon=pl[1];
+ function nm(o,k){return o[k+B]}
+ var h='<div class="card"><b>'+t.klag+':</b> '+nm(a,'sign')+' '+a.deg_in_sign.toFixed(2)+'° · '+nm(a,'nakshatra')+'-'+a.pada+'<br><b>'+t.kmoon+':</b> '+nm(moon,'sign')+' · '+nm(moon,'nakshatra')+'-'+moon.pada+'</div>';
+ h+='<h3>'+t.kch+'</h3><select id="kview">'+['d1','d9','d10'].map(function(v){return '<option value="'+v+'"'+(v==KV?' selected':'')+'>'+v.toUpperCase()+'</option>'}).join('')+'</select><div id="ksvg">'+chartSvg(d.divisional[KV])+'</div>';
+ h+='<h3>'+t.kpt+'</h3><div style="overflow-x:auto"><table style="border-collapse:collapse;width:100%;font-size:14px"><tr>'+[t.kgr,t.kra,t.kdeg,t.knp,t.khs].map(function(x){return '<th style="text-align:left;border-bottom:1px solid var(--line);padding:4px 6px">'+x+'</th>'}).join('')+'</tr>';
+ pl.forEach(function(p){h+='<tr>'+[nm(p,'name')+(p.retrograde?' ('+t.kr+')':''),nm(p,'sign'),p.deg_in_sign.toFixed(2)+'°',nm(p,'nakshatra')+'-'+p.pada,p.house].map(function(x){return '<td style="padding:4px 6px;border-bottom:1px solid var(--line)">'+x+'</td>'}).join('')+'</tr>'});
+ h+='</table></div>';
+ if(d.dasha){var today=new Date().toISOString().slice(0,10),mh=d.dasha.mahadasha,cm=mh.filter(function(x){return x.start<=today&&today<x.end})[0],ca=cm&&cm.antardasha.filter(function(x){return x.start<=today&&today<x.end})[0];
+  var ln=function(x){return L=='bn'?x.lord_bn:x.lord};
+  h+='<h3>'+t.kdt+'</h3><div class="card"><b>'+t.kcur+':</b> '+(cm?ln(cm)+' ('+cm.start+' → '+cm.end+')'+(ca?'<br>'+t.kant+': '+ln(ca)+' ('+ca.start+' → '+ca.end+')':''):t.kin)+'<br><span class="k">'+t.kbal+': '+d.dasha.balance_at_birth_years+'</span></div>';
+  h+=mh.map(function(x){return '<details class="card"><summary>'+ln(x)+' · '+x.start+' → '+x.end+'</summary><ul>'+x.antardasha.map(function(y){return '<li>'+ln(y)+': '+y.start+' → '+y.end+'</li>'}).join('')+'</ul></details>'}).join('')}
+ if(d.panchang){var p=d.panchang;h+='<h3>'+t.kpg+'</h3><div class="card">'+t.kvara+': '+p['vara'+B]+'<br>'+t.ktith+': '+p['paksha'+B]+' '+p['tithi'+B]+'<br>'+t.kyoga+': '+p['yoga'+B]+'<br>'+t.kkar+': '+p['karana'+B]+'<br>'+t.ksr+': '+p.sunrise+' · '+t.kss+': '+p.sunset+'</div>'}
+ var o=$('k-out');o.hidden=false;o.innerHTML=h;
+ $('kview').onchange=function(){KV=this.value;$('ksvg').innerHTML=chartSvg(KD.divisional[KV])}}
+$('k-go').onclick=function(){var t=T[L];$('k-msg').textContent=t.kwait;
+ api($('ksys').value=='kp'?'/kundli/kp':'/kundli/chart',{method:'POST',body:JSON.stringify({date:$('kd').value,time:$('kt').value,tz:$('ktz').value.trim(),lat:parseFloat($('klat').value),lon:parseFloat($('klon').value),system:$('ksys').value})})
+ .then(function(r){KD=r;KV='d1';LASTV='chart';$('k-msg').textContent='';drawKundli()}).catch(function(e){$('k-msg').textContent=errText(e)})};
+
+var KM=null,KT=null,LASTV='chart';
+var PB={Sun:'সূর্য',Moon:'চন্দ্র',Mars:'মঙ্গল',Mercury:'বুধ',Jupiter:'বৃহস্পতি',Venus:'শুক্র',Saturn:'শনি',Rahu:'রাহু',Ketu:'কেতু'};
+function pn(k){return L=='bn'?PB[k]:k}
+function tbl(head,rows){return '<div style="overflow-x:auto"><table style="border-collapse:collapse;width:100%;font-size:14px"><tr>'+head.map(function(x){return '<th style="text-align:left;border-bottom:1px solid var(--line);padding:4px 6px">'+x+'</th>'}).join('')+'</tr>'+rows.map(function(r){return '<tr>'+r.map(function(x){return '<td style="padding:4px 6px;border-bottom:1px solid var(--line)">'+x+'</td>'}).join('')+'</tr>'}).join('')+'</table></div>'}
+function drawKP(){var t=T[L],d=KD,B=L=='bn'?'_bn':'_en',h='';
+ if(d.horary){var hr=d.horary,sg=hr.sign*30,rc=hr.rule_check;
+  h+='<div class="card"><b>'+t.khn+':</b> '+hr.number+'<br><b>'+t.klp+':</b> '+hr['sign'+B]+' '+(hr.segment_start-sg).toFixed(2)+'°–'+(hr.segment_end-sg).toFixed(2)+'° · '+pn(hr.star_lord)+' / '+pn(hr.sub_lord)
+   +(rc?'<br><b>'+t.kmc+':</b> '+t['tp_'+rc.topic]+' · '+t.khs+' '+rc.key_cusp+'<br>'+t.kcs2+': '+pn(rc.cusp_sub_lord)+'<br>'+t.ksh+': '+(rc.signified_houses.join(', ')||'–')+'<br>'+t.ksup+': '+rc.supportive_houses.join(', ')+'<br>'+t.kmat+': '+(rc.matched_houses.join(', ')||'–')+' ('+rc.match_count+'/'+rc.supportive_houses.length+')':'')
+   +'<br><span class="k">'+t.khnote+'</span></div>'}
+ h+='<div class="card"><b>'+t.krp+':</b> '+d.ruling_planets.map(pn).join(', ')+'</div>';
+ h+='<h3>'+t.kcs+'</h3>'+tbl([t.khs,t.kra,t.kdeg,t.ksl,t.kst2,t.ksb,t.kss2],d.cusps.map(function(c){return [c.house,c['sign'+B],c.deg_in_sign.toFixed(2)+'°',pn(c.sign_lord),pn(c.star_lord),pn(c.sub_lord),pn(c.sub_sub_lord)]}));
+ h+='<h3>'+t.kpt+'</h3>'+tbl([t.kgr,t.kra,t.kdeg,t.khs,t.kst2,t.ksb,t.kss2],d.planets.map(function(p){return [p['name'+B]+(p.retrograde?' ('+t.kr+')':''),p['sign'+B],p.deg_in_sign.toFixed(2)+'°',p.house,pn(p.star_lord),pn(p.sub_lord),pn(p.sub_sub_lord)]}));
+ h+='<h3>'+t.ksg+'</h3>'+tbl([t.khs,'A','B','C','D'],Object.keys(d.significators).map(function(k){var g=d.significators[k];return [k].concat(['A','B','C','D'].map(function(x){return g[x].map(pn).join(', ')||'–'}))}));
+ var o=$('k-out');o.hidden=false;o.innerHTML=h}
+function drawMuhurta(){var t=T[L],m=KM,B=L=='bn'?'_bn':'_en',day=m.date;
+ function tm(s){return s.slice(11,16)+(s.slice(0,10)!=day?' (+1)':'')}
+ function w(x){return tm(x.start)+' – '+tm(x.end)}
+ var q={good:'var(--teal)',bad:'#b33',neutral:'var(--mute)'},ql={good:t.kgd,bad:t.kbd,neutral:t.kne};
+ var h='<div class="card"><b>'+m['weekday'+B]+'</b> · '+t.ksr+': '+tm(m.sunrise)+' · '+t.kss+': '+tm(m.sunset)+'</div>';
+ h+='<h3>'+t.kav+'</h3><div class="card">'+t.krh+': '+w(m.avoid.rahu_kaal)+'<br>'+t.kym+': '+w(m.avoid.yamaganda)+'<br>'+t.kgu+': '+w(m.avoid.gulika_kaal)+'</div>';
+ h+='<h3>'+t.kau+'</h3><div class="card">'+t.kab+': '+w(m.auspicious.abhijit)+'<br>'+t.kbr+': '+w(m.auspicious.brahma_muhurta)+'</div>';
+ h+='<h3>'+t.kch2+'</h3>'+tbl(['',t.kch2,''],m.choghadiya.map(function(c){return [(c.period=='day'?t.kdy:t.knt)+' '+w(c),c['name'+B],'<span style="color:'+q[c.quality]+'">'+ql[c.quality]+'</span>']}));
+ h+='<p class="note">'+t.kmn+'</p>';
+ var o=$('k-out');o.hidden=false;o.innerHTML=h}
+$('k-mu').onclick=function(){var t=T[L];$('k-msg').textContent=t.kwait;
+ api('/kundli/muhurta?date='+encodeURIComponent($('kd').value)+'&lat='+encodeURIComponent($('klat').value)+'&lon='+encodeURIComponent($('klon').value)+'&tz='+encodeURIComponent($('ktz').value.trim()))
+ .then(function(r){KM=r;LASTV='muh';$('k-msg').textContent='';drawMuhurta()}).catch(function(e){$('k-msg').textContent=errText(e)})};
+
+function drawTransit(){var t=T[L],d=KT,B=L=='bn'?'_bn':'_en';
+ var map={Lagna:d.natal.lagna.sign};d.planets.forEach(function(p){map[p.key]=p.sign});KV='tr';
+ var sat=d.planets.filter(function(p){return p.key=='Saturn'})[0];
+ var h='<div class="card"><b>'+t.ktat+':</b> '+d.transit_at+'<br><b>'+t.klag+':</b> '+d.natal.lagna['sign'+B]+' · <b>'+t.kmr+':</b> '+d.natal.moon['sign'+B]+'<br>'+t.ksat+': '+d.saturn_from_moon+' · '+t.kjup+': '+d.jupiter_from_moon+'<br>'+t.ksd+': '+(d.sade_sati_phase?t.kyes:t.kno)+'<br><span class="k">'+t.ktn+'</span></div>';
+ h+=chartSvg(map);
+ h+=tbl([t.kgr,t.kra,t.kdeg,t.knp,t.klh,t.kmh],d.planets.map(function(p){return [p['name'+B]+(p.retrograde?' ('+t.kr+')':''),p['sign'+B],p.deg_in_sign.toFixed(2)+'°',p['nakshatra'+B]+'-'+p.pada,p.house_from_lagna,p.house_from_moon]}));
+ var o=$('k-out');o.hidden=false;o.innerHTML=h}
+function kbody(extra){return JSON.stringify(Object.assign({tz:$('ktz').value.trim(),lat:parseFloat($('klat').value),lon:parseFloat($('klon').value)},extra))}
+$('k-tr').onclick=function(){var t=T[L];$('k-msg').textContent=t.kwait;
+ api('/kundli/transit',{method:'POST',body:kbody({date:$('kd').value,time:$('kt').value,at_date:$('kd2').value||null,at_time:$('kt2').value||null})})
+ .then(function(r){KT=r;LASTV='tr';$('k-msg').textContent='';drawTransit()}).catch(function(e){$('k-msg').textContent=errText(e)})};
+$('k-hr').onclick=function(){var t=T[L];$('k-msg').textContent=t.kwait;
+ api('/kundli/horary',{method:'POST',body:kbody({number:parseInt($('knum').value),date:$('kd2').value,time:$('kt2').value,topic:$('kq').value||null})})
+ .then(function(r){KD=r;LASTV='chart';$('k-msg').textContent='';drawKP()}).catch(function(e){$('k-msg').textContent=errText(e)})};
+(function(){var n=new Date(),p=function(x){return String(x).padStart(2,'0')};$('kd2').value=n.getFullYear()+'-'+p(n.getMonth()+1)+'-'+p(n.getDate());$('kt2').value=p(n.getHours())+':'+p(n.getMinutes())})();
+
+var LEGAL_DRAFT=true;
+var LEG={bn:[
+['১. আমরা কোন তথ্য রাখি','অ্যাকাউন্ট: ইমেইল, পাসওয়ার্ডের হ্যাশ (পাসওয়ার্ড নিজে নয়), ভাষা, সম্মতির সময় ও অ্যাকাউন্ট তৈরির সময়। সেভ করা প্ল্যান: আপনার লেখা লক্ষ্য ও ক্ষেত্র। ভুল তথ্যের ফিডব্যাক: আপনি যা লিখে পাঠান। নিরাপত্তা লগ: কোন কাজ (নিবন্ধন, লগইন, অ্যাকাউন্ট মোছা) কখন হয়েছে।'],
+['২. যা আমরা রাখি না','কুণ্ডলী, কেপি, গোচর, পঞ্জিকা ও মুহূর্তের জন্য দেওয়া জন্মতারিখ, সময়, স্থান ও অক্ষাংশ-দ্রাঘিমাংশ শুধু গণনার জন্য সার্ভারে আসে। তা ডেটাবেসে সংরক্ষণ করা হয় না এবং সার্ভারের অ্যাক্সেস লগেও লেখা হয় না।'],
+['৩. তথ্য কেন ব্যবহার করি','অ্যাকাউন্ট চালাতে, ইমেইল যাচাই ও পাসওয়ার্ড রিসেটের বার্তা পাঠাতে, সেভ করা প্ল্যান দেখাতে, নিরাপত্তা রক্ষা করতে এবং ভুল তথ্য শোধরাতে। আপনার ব্যক্তিগত তথ্য বিক্রি করা হয় না এবং বিজ্ঞাপনদাতাকে দেওয়া হয় না।'],
+['৪. আপনার ব্রাউজারে কী থাকে','লগইন টোকেন ও সার্ভারের ঠিকানা আপনার ব্রাউজারের লোকাল স্টোরেজে থাকে; লগআউট করলে টোকেন মুছে যায়। কোনো বিজ্ঞাপন-ট্র্যাকার বা অ্যানালিটিক্স নেই। পেজটি ফন্ট আনতে Google Fonts ব্যবহার করে, ফলে আপনার IP ঠিকানা Google-এ যায়।'],
+['৫. তৃতীয় পক্ষ','হোস্টিং ও ডোমেইন প্রদানকারী, ইমেইল পাঠানোর পরিষেবা এবং Google Fonts নিজেদের লগ রাখতে পারে, যা আমাদের নিয়ন্ত্রণে নেই।'],
+['৬. আপনার অধিকার','অ্যাকাউন্ট ট্যাবে "আমার তথ্য ডাউনলোড" দিয়ে আপনার সব তথ্য পেতে পারেন। "অ্যাকাউন্ট মুছুন" দিলে অ্যাকাউন্ট ও সব সেভ করা প্ল্যান চিরতরে মুছে যায়; ফিডব্যাক ও নিরাপত্তা লগ থেকে আপনার সঙ্গে যোগসূত্র কেটে দেওয়া হয়। ব্যাকআপে থাকা কপি সর্বোচ্চ ৩০ দিনের মধ্যে মুছে যায়।'],
+['৭. নিরাপত্তা','পাসওয়ার্ড হ্যাশ করে রাখা হয়, সংযোগ HTTPS-এ চলে এবং অনুরোধের সংখ্যায় সীমা আছে। কোনো ব্যবস্থাই শতভাগ নিরাপদ নয়।'],
+['৮. বয়স','এই পরিষেবা [১৮] বছরের কম বয়সীদের জন্য নয়।'],
+['৯. পরিষেবার প্রকৃতি','পরিষেবাটি তথ্য ও শিক্ষার জন্য। জ্যোতিষ একটি ঐতিহ্যগত বিশ্বাস, বৈজ্ঞানিকভাবে প্রমাণিত নয়। এখানকার গণনা শুধু গ্রহের অবস্থানের হিসাব, ভবিষ্যদ্বাণী নয়।'],
+['১০. পেশাদার পরামর্শ নয়','স্বাস্থ্য, আইন বা বিনিয়োগের সিদ্ধান্ত এই পরিষেবার ওপর ভিত্তি করে নেবেন না; এসব বিষয়ে যোগ্য বিশেষজ্ঞের পরামর্শ নিন।'],
+['১১. অ্যাকাউন্ট ও ব্যবহারের নিয়ম','সঠিক ইমেইল দিন এবং পাসওয়ার্ড গোপন রাখুন। স্বয়ংক্রিয়ভাবে অতিরিক্ত অনুরোধ পাঠানো, সিস্টেম ভাঙার চেষ্টা বা অন্যের অ্যাকাউন্টে ঢোকা নিষিদ্ধ।'],
+['১২. মূল্য ও ফেরত','এখন পরিষেবা বিনামূল্যে। ভবিষ্যতে পেইড পরিষেবা এলে দাম, সীমা ও ফেরতের নিয়ম কেনার আগে স্পষ্ট দেখানো হবে।'],
+['১৩. নিশ্চয়তা ও দায়','আমরা যথাসম্ভব সঠিক তথ্য দিতে চেষ্টা করি, কিন্তু নির্ভুলতার নিশ্চয়তা দিই না। আইন যতটা অনুমতি দেয়, ততটা পর্যন্ত আমাদের দায় সীমিত।'],
+['১৪. ওপেন সোর্স','এই সফটওয়্যার GNU AGPL-3.0 লাইসেন্সে প্রকাশিত। পেজের নিচের "সোর্স কোড" লিংকে পুরো কোড পাওয়া যায়।'],
+['১৫. পরিবর্তন','নীতি বা শর্ত বদলালে এই পেজে জানানো হবে।'],
+['১৬. যোগাযোগ ও প্রযোজ্য আইন','পরিচালক: অরুণাভ চট্টোপাধ্যায়। ইমেইল: [যোগাযোগের ইমেইল]। প্রযোজ্য আইন: [দেশ/রাজ্য]।']],
+en:[
+['1. Data we keep','Account: email, password hash (never the password), language, consent time and creation time. Saved plans: the goal and area you wrote. Feedback: what you send us. Security log: which action (sign-up, login, account deletion) happened and when.'],
+['2. Data we do not keep','Birth date, time, place and coordinates entered for Kundli, KP, transit, panchang and muhurta reach the server only to run the calculation. They are not saved in the database and not written to server access logs.'],
+['3. Why we use it','To run your account, send verification and password-reset emails, show saved plans, keep the service secure and correct wrong information. We never sell personal data or share it with advertisers.'],
+['4. What stays in your browser','The login token and server address are kept in your browser local storage; logging out removes the token. There are no ad trackers or analytics. The page loads fonts from Google Fonts, so your IP address reaches Google.'],
+['5. Third parties','Hosting and domain providers, the email-sending service and Google Fonts may keep their own logs, which we do not control.'],
+['6. Your rights','Use "Download my data" in the Account tab to get everything we hold. "Delete account" permanently removes the account and all saved plans, and cuts the link between you and feedback and security logs. Copies in backups are deleted within 30 days.'],
+['7. Security','Passwords are hashed, connections use HTTPS and requests are rate-limited. No system is completely secure.'],
+['8. Age','This service is not for people under [18].'],
+['9. Nature of the service','For information and education. Astrology is a traditional belief and is not scientifically proven. Calculations here are planetary position computations, not predictions.'],
+['10. Not professional advice','Do not base health, legal or investment decisions on this service; ask a qualified professional.'],
+['11. Accounts and use','Give a real email and keep your password secret. Automated excessive requests, attempts to break the system and entering other people\'s accounts are not allowed.'],
+['12. Prices and refunds','The service is free for now. If paid services arrive, prices, limits and the refund policy will be shown clearly before you buy.'],
+['13. No warranty and liability','We try to be accurate but do not guarantee it. To the extent the law allows, our liability is limited.'],
+['14. Open source','This software is released under the GNU AGPL-3.0. The "Source code" link at the bottom of the page leads to the full code.'],
+['15. Changes','If the policy or terms change, we will say so on this page.'],
+['16. Contact and governing law','Operator: Arunava Chattopadhyay. Email: [contact email]. Governing law: [country/state].']]};
+function renderLegal(){var t=T[L];$('lg-title').textContent=t.lgt;$('lg-draft').textContent=t.lgd;$('lg-draft').hidden=!LEGAL_DRAFT;
+ $('lg-body').innerHTML=LEG[L].map(function(x){return '<details class="card"><summary>'+x[0]+'</summary><p style="margin:.5rem 0 0">'+x[1]+'</p></details>'}).join('');
+ $('a-lg').textContent=t.lgl}
+$('a-lg').onclick=function(e){e.preventDefault();show('legal')};
+$('a-exp').onclick=function(){var t=T[L];api('/me/export').then(function(r){var b=new Blob([JSON.stringify(r,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='my-data.json';document.body.appendChild(a);a.click();a.remove();$('a-msg').textContent=t.aok}).catch(function(e){$('a-msg').textContent=errText(e)})};
+
+
+var TILES=[["kun", "ksys", "vedic", "tl_v"], ["kun", "ksys", "kp", "tl_kp"], ["kun", "k-mu", null, "tl_mu"], ["kun", "k-tr", null, "tl_tr"], ["kun", "knum", null, "tl_hr"], ["lab", "l-go", null, "tl_lab"], ["plan", "p-go", null, "tl_pl"], ["acct", "a-title", null, "tl_ac"]];
+function renderTiles(){var t=T[L];$('tiles').innerHTML=TILES.map(function(x,i){var v=t[x[3]].split('|');return '<button class="tile" data-i="'+i+'">'+v[0]+'<small>'+v[1]+'</small></button>'}).join('')}
+$('tiles').onclick=function(e){var b=e.target.closest('.tile');if(!b)return;var x=TILES[b.dataset.i];show(x[0]);if(x[2])$(x[1]).value=x[2];var el=$(x[1]);setTimeout(function(){el.scrollIntoView({block:'center'})},30)};
+var PT=null;
+function mailAct(path){var t=T[L],em=$('email').value.trim();if(!em){$('a-msg').textContent=t.aem;return}
+ API=$('apiurl').value.trim().replace(/\/$/,'')||API;store('ci_api',API);
+ api(path,{method:'POST',body:JSON.stringify({email:em})}).then(function(){$('a-msg').textContent=t.afs}).catch(function(e){$('a-msg').textContent=errText(e)})}
+$('a-fg').onclick=function(e){e.preventDefault();mailAct('/auth/forgot')};
+$('a-rv').onclick=function(e){e.preventDefault();mailAct('/auth/resend-verification')};
+$('a-rs').onclick=function(){var t=T[L];api('/auth/reset',{method:'POST',body:JSON.stringify({token:PT,password:$('npw').value})}).then(function(){$('npw').value='';PT=null;$('a-reset').hidden=true;$('a-msg').textContent=t.arok}).catch(function(e){$('a-msg').textContent=errText(e)})};
+(function(){var m=location.hash.slice(1).match(/^(verify|reset)=([\w\-.]+)$/);if(!m)return;
+ try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}
+ show('acct');var t=T[L];
+ if(m[1]=='reset'){tok=null;store('ci_tok',null);renderAcct();PT=m[2];$('a-reset').hidden=false;return}
+ api('/auth/verify',{method:'POST',body:JSON.stringify({token:m[2]})}).then(function(){$('a-msg').textContent=t.avd}).catch(function(e){$('a-msg').textContent=errText(e)})})();
+render();
+api('/source').then(function(r){if(r&&r.source_url)$('src').href=r.source_url}).catch(function(){});
+</script>
+</body>
+</html>
